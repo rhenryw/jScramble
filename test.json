@@ -1,0 +1,19 @@
+{
+  "restaurants": [
+    {
+      "name": "La Piazza",
+      "cuisine": "Italian",
+      "typical_cost": "$$"
+    },
+    {
+      "name": "Sakura Express",
+      "cuisine": "Japanese",
+      "typical_cost": "$$$"
+    },
+    {
+      "name": "Taco Loco",
+      "cuisine": "Mexican",
+      "typical_cost": "$"
+    }
+  ]
+}

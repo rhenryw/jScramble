@@ -1,0 +1,31 @@
+{
+  "name": "jscramble-cli",
+  "version": "1.0.0",
+  "description": "A command-line tool to scramble JSON data for obfuscation.",
+  "main": "dist/cli.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "bin": {
+    "jscramble": "./bin/jscramble"
+  },
+  "dependencies": {
+    "commander": "^14.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "ts-node": "^10.4.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.4"
+  },
+  "keywords": [
+    "json",
+    "scramble",
+    "obfuscation",
+    "cli"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
