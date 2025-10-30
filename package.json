@@ -1,0 +1,16 @@
+{
+  "name": "jscramble",
+  "version": "0.1.0",
+  "description": "CLI to obfuscate JSON and generate a runtime deobfuscator",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "ob": "bin/ob.js"
+  },
+  "scripts": {
+    "ob": "node bin/ob.js"
+  },
+  "dependencies": {
+    "javascript-obfuscator": "^4.1.1"
+  }
+}
