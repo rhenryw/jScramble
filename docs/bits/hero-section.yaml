@@ -90,6 +90,27 @@ CSS: |
     margin: 0;
     font-size: 0.95rem;
   }
+  [data-bit="hero-section"] .cta {
+    margin-top: 2rem;
+    animation: fade-in-up 1s ease 0.9s backwards;
+  }
+  [data-bit="hero-section"] .cta-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+  [data-bit="hero-section"] .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
 JS: |
   const { container, config } = ctx;
   
@@ -133,5 +154,18 @@ JS: |
   });
   
   inner.appendChild(features);
+  
+  // Add GitHub CTA button
+  const cta = document.createElement('div');
+  cta.className = 'cta';
+  const ctaBtn = document.createElement('a');
+  ctaBtn.className = 'cta-button';
+  ctaBtn.href = config.githubUrl || 'https://github.com/rhenryw/jScramble';
+  ctaBtn.target = '_blank';
+  ctaBtn.rel = 'noopener noreferrer';
+  ctaBtn.textContent = '⭐ View on GitHub';
+  cta.appendChild(ctaBtn);
+  inner.appendChild(cta);
+  
   hero.appendChild(inner);
   container.appendChild(hero);

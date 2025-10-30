@@ -1,0 +1,216 @@
+Name: docs
+CSS: |
+  [data-bit="docs"] {
+    width: 100%;
+    box-sizing: border-box;
+    background: #0B0B0F;
+  }
+  [data-bit="docs"] .container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    min-height: 100vh;
+  }
+  /* GitHub-like Markdown styles (subset) */
+  [data-bit="docs"] .markdown-body {
+    color: #E2E8F0;
+    line-height: 1.6;
+    word-wrap: break-word;
+    background: transparent;
+    padding: 0;
+  }
+  /* Force light text for body copy elements */
+  [data-bit="docs"] .markdown-body p,
+  [data-bit="docs"] .markdown-body li,
+  [data-bit="docs"] .markdown-body td,
+  [data-bit="docs"] .markdown-body th,
+  [data-bit="docs"] .markdown-body span,
+  [data-bit="docs"] .markdown-body summary {
+    color: #E2E8F0 !important;
+  }
+  [data-bit="docs"] .markdown-body hr { border-color: #30363d; }
+  [data-bit="docs"] .markdown-body table { border-color: #30363d; }
+  [data-bit="docs"] .markdown-body th,
+  [data-bit="docs"] .markdown-body td { border-color: #30363d; }
+  [data-bit="docs"] .markdown-body a { color: #3B82F6; text-decoration: none; }
+  [data-bit="docs"] .markdown-body a:hover { text-decoration: underline; }
+  [data-bit="docs"] .markdown-body h1,
+  [data-bit="docs"] .markdown-body h2,
+  [data-bit="docs"] .markdown-body h3,
+  [data-bit="docs"] .markdown-body h4,
+  [data-bit="docs"] .markdown-body h5,
+  [data-bit="docs"] .markdown-body h6 {
+    color: #E2E8F0 !important;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-top: 1.5em;
+    margin-bottom: .75em;
+  }
+  [data-bit="docs"] .markdown-body h1 { font-size: 2rem; }
+  [data-bit="docs"] .markdown-body h2 { font-size: 1.6rem; }
+  [data-bit="docs"] .markdown-body h3 { font-size: 1.3rem; }
+  [data-bit="docs"] .markdown-body p { margin: 1em 0; }
+  [data-bit="docs"] .markdown-body code, [data-bit="docs"] .markdown-body pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: .95em;
+  }
+  [data-bit="docs"] .markdown-body code {
+    background: rgba(59, 130, 246, 0.1);
+    color: #60A5FA;
+    padding: .2em .4em;
+    border-radius: 6px;
+  }
+  [data-bit="docs"] .markdown-body pre {
+    background: #0F172A;
+    color: #E2E8F0;
+    padding: 1rem;
+    overflow: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+  }
+  [data-bit="docs"] .markdown-body pre code {
+    background: transparent;
+    color: #E2E8F0;
+    padding: 0;
+  }
+  [data-bit="docs"] .markdown-body blockquote {
+    margin: 0;
+    padding-left: 1em;
+    border-left: 4px solid #3B82F6;
+    color: #94A3B8;
+  }
+  [data-bit="docs"] .markdown-body table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  [data-bit="docs"] .markdown-body th,
+  [data-bit="docs"] .markdown-body td {
+    border: 1px solid #30363d;
+    padding: .5rem .75rem;
+  }
+  [data-bit="docs"] .markdown-body img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem 0;
+  }
+JS: |
+  const { container, config, utils } = ctx;
+  const url = String(config.url || config.href || '').trim();
+  const bg = config.styles && config.styles.backgroundColor ? config.styles.backgroundColor : '#0B0B0F';
+  const textColor = config.styles && config.styles.textColor ? config.styles.textColor : '#E2E8F0';
+  const linkColor = config.styles && config.styles.linkColor ? config.styles.linkColor : '#3B82F6';
+  const headingColor = config.styles && config.styles.headingColor ? config.styles.headingColor : '#E2E8F0';
+
+  container.style.width = '100%';
+  container.style.boxSizing = 'border-box';
+  container.style.background = bg;
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'container';
+
+  const mdRoot = document.createElement('div');
+  mdRoot.className = 'markdown-body';
+  mdRoot.style.color = textColor;
+
+  wrapper.appendChild(mdRoot);
+  container.appendChild(wrapper);
+
+  function setThemeColors() {
+    const style = document.createElement('style');
+    style.textContent = `
+      [data-bit="docs"] .markdown-body a { color: ${linkColor}; }
+      [data-bit="docs"] .markdown-body h1,
+      [data-bit="docs"] .markdown-body h2,
+      [data-bit="docs"] .markdown-body h3,
+      [data-bit="docs"] .markdown-body h4,
+      [data-bit="docs"] .markdown-body h5,
+      [data-bit="docs"] .markdown-body h6 { color: ${headingColor}; }
+    `;
+    container.appendChild(style);
+  }
+  setThemeColors();
+
+  function ensureGitHubMarkdownCSS() {
+    const existing = Array.from(document.styleSheets).some(s => (s.href||'').includes('github-markdown')); 
+    if (existing) return;
+    const l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = 'https://cdn.jsdelivr.net/npm/github-markdown-css@5.5.0/github-markdown.css';
+    document.head.appendChild(l);
+  }
+  ensureGitHubMarkdownCSS();
+
+  function fetchText(u) {
+    return fetch(u).then(r => {
+      if (!r.ok) throw new Error('Failed to fetch markdown');
+      return r.text();
+    });
+  }
+
+  function ensureMarked() {
+    return new Promise((resolve) => {
+      if (window.marked) return resolve(window.marked);
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+      s.onload = () => resolve(window.marked);
+      document.head.appendChild(s);
+    });
+  }
+
+  function ensureHighlight() {
+    return new Promise((resolve) => {
+      if (window.hljs) return resolve(window.hljs);
+      const l = document.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css';
+      document.head.appendChild(l);
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js';
+      s.onload = () => resolve(window.hljs);
+      document.head.appendChild(s);
+    });
+  }
+
+  async function renderMarkdown() {
+    if (!url) return;
+    const [md, markedLib, hljs] = await Promise.all([
+      fetchText(url),
+      ensureMarked(),
+      ensureHighlight()
+    ]);
+    const baseUrl = url.replace(/\/?[^/]*$/, '/');
+    markedLib.setOptions({
+      breaks: true,
+      baseUrl,
+      highlight: (code, lang) => {
+        try { return hljs.highlight(code, { language: lang }).value; }
+        catch (e) { try { return hljs.highlightAuto(code).value; } catch (_) { return code; } }
+      }
+    });
+    mdRoot.innerHTML = markedLib.parse(md);
+
+    // Rewrite GitHub blob image URLs to raw URLs so they load correctly
+    const imgEls = mdRoot.querySelectorAll('img');
+    imgEls.forEach(img => {
+      try {
+        const src = img.getAttribute('src') || '';
+        const m = src.match(/^https?:\/\/github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/(.*)$/);
+        if (m) {
+          const raw = `https://raw.githubusercontent.com/${m[1]}/${m[2]}/${m[3]}/${m[4]}`;
+          img.setAttribute('src', raw);
+        }
+      } catch (_) {}
+    });
+
+    mdRoot.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }));
+  }
+
+  renderMarkdown().catch(() => {
+    mdRoot.textContent = 'Failed to load documentation.';
+  });

@@ -107,12 +107,14 @@ CSS: |
     background: rgba(15, 23, 42, 0.5);
     border-top: 1px solid rgba(59, 130, 246, 0.2);
     width: 100%;
+    box-sizing: border-box;
   }
   [data-bit="code-slider"] .label {
     font-size: 0.85rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    white-space: nowrap;
   }
   [data-bit="code-slider"] .label.before {
     color: #EC4899;

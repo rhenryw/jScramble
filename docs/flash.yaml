@@ -102,6 +102,10 @@ sections:
           }
         }
 
+  - type: docs
+    config:
+      url: "https://cdn.jsdelivr.net/gh/rhenryw/jScramble@refs/heads/main/README.md"
+
   - type: info-section
     config:
       title: "How It Works"
