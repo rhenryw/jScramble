@@ -1,0 +1,127 @@
+background:
+  color: "#0B0B0F"
+
+metadata:
+  title: "jScramble - Advanced JSON Obfuscation CLI"
+  description: "A tiny Node.js CLI to obfuscate JSON by encrypting with AES-GCM, then aggressively unicode-escaping characters."
+  author: "jScramble"
+
+bits:
+  sources:
+    - ./bits/
+
+custom:
+  css: |
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0B0B0F;
+      color: #E2E8F0;
+      overflow-x: hidden;
+    }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #1E293B;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #3B82F6, #8B5CF6);
+      border-radius: 5px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #60A5FA, #A78BFA);
+    }
+
+sections:
+  - type: hero-section
+    config:
+      title: "jScramble"
+      subtitle: "Advanced JSON Obfuscation CLI with AES-GCM Encryption"
+      features:
+        - title: "🔐 AES-GCM Encryption"
+          desc: "Military-grade encryption for your JSON"
+        - title: "🎭 Unicode Escaping"
+          desc: "Aggressive character obfuscation"
+        - title: "🌐 Browser Ready"
+          desc: "Web Crypto API integration"
+
+  - type: code-slider
+    config:
+      title: "See The Magic In Action"
+      beforeCode: |
+        {
+          "v": 1,
+          "a": "AES-GCM",
+          "i": "4\\u0054\\u004a\\u0079\\u0032lE\\u004aE\\u006fU\\u0069\\u0074\\u0079\\u0049\\u0049",
+          "c": "\\u0055\\u0057\\u0053r\\u0052\\u0048\\u0048\\u0056\\u0069\\u0042\\u0067\\u0038\\u006b\\u0059\\u0059\\u0055\\u0061\\u0042\\u0066\\u00452\\u0037\\u002f\\u0057\\u004c\\u0064\\u0059\\u0039oc\\u0069\\u0032\\u0036\\u006f\\u0049\\u0053\\u004e\\u0033b\\u0070\\u0050\\u004c\\u0031\\u0070\\u0045\\u0031\\u0078\\u006d\\u0054\\u0075\\u0067\\u0065\\u0032\\u002b\\u0071k\\u0039\\u0052\\u0041\\u004b\\u004f\\u0035\\u004c\\u005a\\u0062\\u0054u\\u0077\\u0037\\u0076\\u0065\\u006b\\u0076\\u0076\\u0077\\u0066\\u0068H\\u004e\\u0033\\u0045\\u0057\\u0053\\u0038S\\u0030L\\u006a\\u0038\\u0044\\u0038\\u0041\\u0079U\\u0032\\u002b3c\\u0059\\u0065\\u004b\\u00463\\u005a\\u0055\\u0050\\u0030\\u004d\\u004a\\u0063\\u0074\\u0065\\u0066\\u007a\\u0056\\u0063\\u004a\\u0066\\u002b\\u0045sjV\\u006b\\u0055\\u004f\\u0046\\u0067\\u0069\\u0035\\u0045\\u0054\\u0061\\u006c\\u0045\\u0065\\u0050\\u006b\\u0039\\u0076\\u00700\\u005a\\u006a\\u004c\\u0057\\u0064\\u0073\\u0070\\u007a\\u0036\\u0030R\\u0070\\u0059\\u004e\\u0056\\u0051\\u0070\\u0051\\u004e\\u004e\\u0044\\u005a\\u0034\\u0036L\\u0036\\u0072\\u006d1\\u004a\\u006d\\u0075\\u0055\\u0059\\u004f\\u0051\\u0033\\u0074\\u0044\\u0038\\u0057\\u0070\\u0044\\u006e\\u004d\\u0033\\u0068\\u0046\\u0035\\u0045\\u0036\\u0041\\u0075\\u0065\\u0067\\u0071\\u006f\\u004a\\u0039\\u0046\\u0039\\u0071\\u004d\\u007a\\u0069\\u0038\\u002b\\u0032bwI\\u0067\\u004f\\u004a\\u004d\\u0055\\u0056\\u0038\\u0058\\u0061\\u006fw\\u0044\\u0030\\u0064\\u006c\\u0059b\\u00350\\u0075\\u0068\\u0070\\u0039\\u0053\\u0056w\\u0057\\u0036\\u007a\\u0075\\u0045\\u0067\\u0050\\u006a\\u0079\\u004c\\u0068\\u0077\\u0078\\u004ct\\u004b\\u0054\\u0070Y3I\\u006aM\\u0078\\u0071T\\u0053\\u0047M\\u0056\\u0055\\u006e\\u0051\\u0032S\\u0069\\u004b\\u0036\\u002b\\u0052\\u0042\\u0077\\u0045\\u0050\\u0070\\u006aD\\u002b\\u004cz\\u007a\\u0039\\u0058\\u0070k\\u0042\\u0041",
+          "e": {
+            "f": 5,
+            "d": 6,
+            "s": 1686784228
+          },
+          "j": [
+            "\\u0037\\u0061\\u0072\\u0039\\u0075\\u00486\\u0049...",
+            "\\u0076\\u0034kt\\u0067\\u0039\\u0042\\u0058..."
+          ]
+        }
+      afterCode: |
+        {
+          "message": "Hello, World!",
+          "timestamp": "2024-01-15T10:30:00Z",
+          "user": {
+            "id": 12345,
+            "name": "John Doe",
+            "email": "john@example.com",
+            "active": true
+          },
+          "items": [
+            "Apple",
+            "Banana",
+            "Cherry"
+          ],
+          "metadata": {
+            "version": "1.0.0",
+            "environment": "production"
+          }
+        }
+
+  - type: info-section
+    config:
+      title: "How It Works"
+      intro: "jScramble provides military-grade JSON obfuscation for your web applications through a multi-layered approach."
+      cards:
+        - title: "🔐 AES-GCM Encryption"
+          content: "Encrypts your entire JSON payload using <code>AES-GCM</code> with a randomly generated key and IV. This ensures that both keys and values are completely protected from unauthorized access."
+        - title: "🎭 Unicode Escaping"
+          content: "Applies aggressive unicode-escaping to approximately <strong>5/6</strong> of characters using a seeded PRNG, making the output extremely difficult to read and analyze manually."
+        - title: "🗑️ Junk Injection"
+          content: "Adds fake strings to the output JSON that are automatically ignored by the runtime, further obscuring the actual data structure and deterring reverse engineering attempts."
+        - title: "📦 Minified Runtime"
+          content: "Generates a tiny, obfuscated <code>read.js</code> file with the AES key embedded, providing seamless browser-side decryption using the Web Crypto API."
+        - title: "⚡ Performance"
+          content: "Lightweight implementation with minimal overhead. The runtime uses native browser APIs for fast decryption without external dependencies."
+        - title: "🛡️ Security Note"
+          content: "This is <strong>security-by-obscurity</strong> for client-side assets. It deters casual inspection and scraping but determined attackers can eventually recover the key from <code>read.js</code>."
+
+  - type: footer
+    config:
+      image: "https://cdn.jsdelivr.net/gh/rhenryw/FLASH@main/img/button.png"
+      link: "https://github.com/rhenryw/FLASH"
+      note: "⚠️ Security Notice: This is security-by-obscurity for client-side assets. Anyone with access to read.js can ultimately recover the key; this only deters casual inspection and scraping."

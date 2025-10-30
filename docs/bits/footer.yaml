@@ -1,0 +1,94 @@
+Name: footer
+CSS: |
+  [data-bit="footer"] {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
+    padding: 3rem 2rem;
+    margin-top: 6rem;
+  }
+  [data-bit="footer"] .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  [data-bit="footer"] .flash-badge {
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+  [data-bit="footer"] .flash-badge:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+  }
+  [data-bit="footer"] .flash-badge img {
+    width: 88px;
+    height: 31px;
+  }
+  [data-bit="footer"] .info {
+    text-align: center;
+    color: #94A3B8;
+  }
+  [data-bit="footer"] .info p {
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+  }
+  [data-bit="footer"] .info a {
+    color: #3B82F6;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  [data-bit="footer"] .info a:hover {
+    color: #60A5FA;
+  }
+  [data-bit="footer"] .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+    margin: 1rem 0;
+  }
+  [data-bit="footer"] .note {
+    color: #64748B;
+    font-size: 0.85rem;
+    font-style: italic;
+    text-align: center;
+    max-width: 600px;
+  }
+JS: |
+  const { container, config } = ctx;
+  
+  const footer = document.createElement('div');
+  footer.className = 'content';
+  
+  const badge = document.createElement('a');
+  badge.href = config.link || 'https://github.com/rhenryw/FLASH';
+  badge.target = '_blank';
+  badge.className = 'flash-badge';
+  badge.rel = 'noopener noreferrer';
+  
+  const img = document.createElement('img');
+  img.src = config.image || 'https://cdn.jsdelivr.net/gh/rhenryw/FLASH@main/img/button.png';
+  img.alt = 'Built with FLASH';
+  badge.appendChild(img);
+  
+  footer.appendChild(badge);
+  
+  const divider = document.createElement('div');
+  divider.className = 'divider';
+  footer.appendChild(divider);
+  
+  const info = document.createElement('div');
+  info.className = 'info';
+  info.innerHTML = `
+    <p><strong>jScramble</strong> - Advanced JSON Obfuscation CLI</p>
+    <p><a href="https://github.com/rhenryw/jScramble" target="_blank">GitHub Repository</a></p>
+  `;
+  footer.appendChild(info);
+  
+  const note = document.createElement('p');
+  note.className = 'note';
+  note.textContent = config.note || 'This is security-by-obscurity for client-side assets. Anyone with access to read.js can ultimately recover the key; this only deters casual inspection and scraping.';
+  footer.appendChild(note);
+  
+  container.appendChild(footer);

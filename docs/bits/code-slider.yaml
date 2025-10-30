@@ -1,0 +1,258 @@
+Name: code-slider
+CSS: |
+  [data-bit="code-slider"] {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 2rem;
+  }
+  [data-bit="code-slider"] h2 {
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    margin: 0 auto 3rem;
+    max-width: 980px;
+    background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  [data-bit="code-slider"] .slider-container {
+    position: relative;
+    background: #0F172A;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0;
+  }
+  [data-bit="code-slider"] .code-wrapper {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    width: 100%;
+  }
+  [data-bit="code-slider"] .code-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 2rem;
+    font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    box-sizing: border-box;
+  }
+  [data-bit="code-slider"] .code-panel.before {
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    clip-path: inset(0 var(--slider-inverse, 50%) 0 0);
+    z-index: 1;
+  }
+  [data-bit="code-slider"] .code-panel.after {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    clip-path: inset(0 0 0 var(--slider-pos, 50%));
+    z-index: 2;
+  }
+  [data-bit="code-slider"] .code-panel h3 {
+    color: #3B82F6;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0 0 1rem;
+    font-weight: 700;
+    text-align: left;
+  }
+  [data-bit="code-slider"] pre {
+    margin: 0;
+    color: #E2E8F0;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  [data-bit="code-slider"] .slider-handle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #3B82F6, #8B5CF6, #EC4899);
+    cursor: ew-resize;
+    z-index: 3;
+    transform: translateX(-50%);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+  [data-bit="code-slider"] .slider-handle::before {
+    content: '⟷';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #3B82F6;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  [data-bit="code-slider"] .labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(15, 23, 42, 0.5);
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
+    width: 100%;
+  }
+  [data-bit="code-slider"] .label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  [data-bit="code-slider"] .label.before {
+    color: #EC4899;
+  }
+  [data-bit="code-slider"] .label.after {
+    color: #10B981;
+  }
+  /* Syntax highlighting */
+  [data-bit="code-slider"] .string { color: #A5D6FF; }
+  [data-bit="code-slider"] .number { color: #79C0FF; }
+  [data-bit="code-slider"] .key { color: #FFA657; }
+  [data-bit="code-slider"] .bracket { color: #C9D1D9; }
+JS: |
+  const { container, config } = ctx;
+  
+  const wrapper = document.createElement('div');
+  
+  const title = document.createElement('h2');
+  title.textContent = config.title || 'See The Magic';
+  wrapper.appendChild(title);
+  
+  const sliderContainer = document.createElement('div');
+  sliderContainer.className = 'slider-container';
+  
+  const codeWrapper = document.createElement('div');
+  codeWrapper.className = 'code-wrapper';
+  
+  // Before panel (obfuscated)
+  const beforePanel = document.createElement('div');
+  beforePanel.className = 'code-panel before';
+  beforePanel.innerHTML = `
+    <h3>Obfuscated JSON</h3>
+    <pre id="pre-ob">${config.beforeCode || ''}</pre>
+  `;
+  
+  // After panel (deobfuscated)
+  const afterPanel = document.createElement('div');
+  afterPanel.className = 'code-panel after';
+  afterPanel.innerHTML = `
+    <h3>Original JSON</h3>
+    <pre id="pre-deob">${config.afterCode || ''}</pre>
+  `;
+  
+  // Slider handle
+  const handle = document.createElement('div');
+  handle.className = 'slider-handle';
+  
+  codeWrapper.appendChild(beforePanel);
+  codeWrapper.appendChild(afterPanel);
+  codeWrapper.appendChild(handle);
+  sliderContainer.appendChild(codeWrapper);
+  
+  // Labels
+  const labels = document.createElement('div');
+  labels.className = 'labels';
+  labels.innerHTML = `
+    <span class="label before">⚠️ Obfuscated</span>
+    <span class="label after">✓ Decoded</span>
+  `;
+  sliderContainer.appendChild(labels);
+  
+  wrapper.appendChild(sliderContainer);
+  container.appendChild(wrapper);
+  
+  // Slider functionality
+  let isDragging = false;
+  
+  const updateSlider = (clientX) => {
+    const rect = codeWrapper.getBoundingClientRect();
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    const percentage = (x / rect.width) * 100;
+    const inversePercentage = 100 - percentage;
+    
+    handle.style.left = percentage + '%';
+    afterPanel.style.setProperty('--slider-pos', percentage + '%');
+    beforePanel.style.setProperty('--slider-inverse', inversePercentage + '%');
+  };
+
+  // Initialize slider in the middle
+  const initMiddle = () => {
+    const rect = codeWrapper.getBoundingClientRect();
+    const mid = rect.left + rect.width / 2;
+    updateSlider(mid);
+  };
+  
+  // Click anywhere on the slider to jump
+  codeWrapper.addEventListener('click', (e) => updateSlider(e.clientX));
+  
+  handle.addEventListener('mousedown', () => { isDragging = true; });
+  document.addEventListener('mouseup', () => { isDragging = false; });
+  document.addEventListener('mousemove', (e) => {
+    if (isDragging) updateSlider(e.clientX);
+  });
+  
+  handle.addEventListener('touchstart', () => { isDragging = true; });
+  document.addEventListener('touchend', () => { isDragging = false; });
+  document.addEventListener('touchmove', (e) => {
+    if (isDragging && e.touches[0]) updateSlider(e.touches[0].clientX);
+  });
+
+  // Recenter on resize for consistency
+  window.addEventListener('resize', initMiddle);
+  // First paint
+  requestAnimationFrame(initMiddle);
+
+  // Helper: escape HTML for safe <pre> injection
+  const escapeHtml = (s) => String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+
+  // Ensure read.js is available, then render real before/after from test-ob.json
+  const ensureJscramble = () => new Promise((resolve, reject) => {
+    if (window.jscramble && typeof window.jscramble.read === 'function') return resolve();
+    const s = document.createElement('script');
+    s.src = config.readSrc || './read.js';
+    s.async = true;
+    s.onload = () => resolve();
+    s.onerror = (e) => reject(new Error('Failed to load read.js'));
+    document.head.appendChild(s);
+  });
+
+  (async () => {
+    try {
+      const obSrc = config.src || './test-ob.json';
+      // Get raw text for BEFORE so escaping is preserved
+      const respText = await fetch(obSrc).then(r => r.text());
+      const obObj = JSON.parse(respText);
+      const preOb = beforePanel.querySelector('#pre-ob');
+      if (preOb) preOb.innerHTML = escapeHtml(respText);
+
+      // Ensure runtime, then decode for AFTER
+      await ensureJscramble();
+      const decoded = await window.jscramble.read(obObj);
+      const pretty = JSON.stringify(decoded, null, 2);
+      const preDeob = afterPanel.querySelector('#pre-deob');
+      if (preDeob) preDeob.textContent = pretty;
+    } catch (err) {
+      console.warn('code-slider: failed to render before/after', err);
+    }
+  })();
