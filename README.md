@@ -1,4 +1,4 @@
-# jScramble CLI
+# [jScramble CLI](https://rhenryw.github.io/jScramble)
 
 A tiny Node.js CLI to obfuscate JSON by encrypting with AES-GCM, then aggressively unicode-escaping most characters and sprinkling in junk. It also generates a small, minified `read.js` that holds the decryption key and exposes a runtime function to restore the original JSON in the browser.
 
