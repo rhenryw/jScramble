@@ -1,4 +1,4 @@
-# jScramble CLI
+kmb # jScramble CLI
 
 A tiny Node.js CLI to obfuscate JSON by encrypting with AES-GCM, then aggressively unicode-escaping most characters and sprinkling in junk. It also generates a small, minified `read.js` that holds the decryption key and exposes a runtime function to restore the original JSON in the browser.
 
@@ -66,4 +66,5 @@ node bin/ob.js test.json
 node test-decrypt.js
 ```
 
-License: MIT
+## Why I made this
+Most JSON obfuscators are kind of crap, which doesn't matter too much, because an attacker could still easily decrypt this using read.js, but is better for non leaking.
