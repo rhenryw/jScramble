@@ -66,4 +66,5 @@ node bin/ob.js test.json
 node test-decrypt.js
 ```
 
-License: MIT
+## Why I made this
+Most JSON obfuscators are kind of crap, which doesn't matter too much, because an attacker could still easily decrypt this using read.js, but is better for non leaking.
